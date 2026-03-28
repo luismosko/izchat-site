@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iZchat - Atendimento Inteligente com IA para WhatsApp</title>
+    <meta name="description" content="Transforme seu WhatsApp em uma central de atendimento profissional com IA, CRM integrado e API Oficial. Automatize, venda mais e nunca perca seu número.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-primary: #22c55e;
+            --green-dark: #16a34a;
+            --green-light: #4ade80;
+            --green-glow: rgba(34, 197, 94, 0.3);
+            --purple-primary: #8b5cf6;
+            --purple-dark: #7c3aed;
+            --purple-light: #a78bfa;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border-color: rgba(255,255,255,0.08);
+            --gradient-green: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 0; background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo img { height: 40px; width: auto; }
+        nav { display: flex; align-items: center; gap: 32px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--text-primary); }
+        .nav-buttons { display: flex; gap: 12px; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+            text-decoration: none; cursor: pointer; transition: all 0.3s; border: none;
+        }
+        .btn-primary { background: var(--gradient-green); color: white; box-shadow: 0 4px 20px var(--green-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--green-glow); }
+        .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--green-primary); }
+        .btn-outline { background: transparent; color: var(--green-primary); border: 1px solid var(--green-primary); }
+        .btn-outline:hover { background: var(--green-primary); color: white; }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 0 80px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+            background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 100px; font-size: 13px; color: var(--green-primary); margin-bottom: 24px;
+        }
+        .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--green-primary); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 span { background: var(--gradient-green); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; max-width: 500px; }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border-color); }
+        .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--green-primary); }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .hero-visual { position: relative; }
+        .hero-image { width: 100%; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+        .floating-card {
+            position: absolute; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: float 6s ease-in-out infinite;
+        }
+        .floating-card.card-1 { top: -20px; right: -30px; }
+        .floating-card.card-2 { bottom: 60px; left: -40px; animation-delay: -3s; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .card-icon.green { background: rgba(34, 197, 94, 0.15); }
+        .card-icon.purple { background: rgba(139, 92, 246, 0.15); }
+        .card-text { font-size: 13px; }
+        .card-text strong { display: block; font-weight: 600; color: var(--text-primary); }
+        .card-text span { color: var(--text-muted); }
+
+        /* Sections */
+        section { padding: 100px 0; position: relative; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--green-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; margin-bottom: 16px; }
+        .section-subtitle { font-size: 17px; color: var(--text-secondary); }
+
+        /* Features */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .feature-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s; }
+        .feature-card:hover { background: var(--bg-card-hover); border-color: rgba(34, 197, 94, 0.3); transform: translateY(-4px); }
+        .feature-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); }
+        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+        .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+        /* API Section */
+        .api-section { background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.03) 50%, transparent 100%); }
+        .api-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .api-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; }
+        .api-text h2 span { color: var(--green-primary); }
+        .api-text > p { font-size: 17px; color: var(--text-secondary); margin-bottom: 32px; }
+        .api-benefits { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+        .api-benefits li { display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); }
+        .benefit-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+        .benefit-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .benefit-text span { font-size: 13px; color: var(--text-muted); }
+        .api-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; text-align: center; }
+        .shield-icon { width: 100px; height: 100px; margin: 0 auto 24px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px; border: 2px solid rgba(34, 197, 94, 0.3); }
+        .api-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+        .api-card p { color: var(--text-secondary); margin-bottom: 24px; }
+        .api-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-color); }
+        .api-stat { text-align: center; }
+        .api-stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--green-primary); }
+        .api-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+        /* IA Section */
+        .ia-section { background: var(--bg-card); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .ia-content { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .ia-chat { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; }
+        .ia-chat-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.02); }
+        .ia-chat-avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-green); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .ia-chat-info strong { display: block; font-size: 14px; }
+        .ia-chat-info span { font-size: 12px; color: var(--green-primary); }
+        .ia-chat-messages { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .chat-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+        .chat-message.user { align-self: flex-end; background: var(--gradient-green); color: white; border-bottom-right-radius: 4px; }
+        .chat-message.bot { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; }
+        .chat-typing { display: flex; gap: 4px; padding: 12px 16px; align-self: flex-start; }
+        .chat-typing span { width: 8px; height: 8px; background: var(--text-muted); border-radius: 50%; animation: typing 1.4s infinite; }
+        .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        .ia-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; }
+        .ia-text h2 span { background: var(--gradient-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .ia-text > p { font-size: 17px; color: var(--text-secondary); margin-bottom: 32px; }
+        .ia-features { display: grid; gap: 16px; }
+        .ia-feature { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--bg-dark); border-radius: 12px; border: 1px solid var(--border-color); }
+        .ia-feature-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .ia-feature-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .ia-feature-text span { font-size: 13px; color: var(--text-muted); }
+
+        /* CRM Section */
+        .crm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .crm-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; }
+        .crm-card:hover { border-color: rgba(139, 92, 246, 0.3); }
+        .crm-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(34, 197, 94, 0.08) 100%); }
+        .crm-card-icon { width: 60px; height: 60px; border-radius: 14px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; }
+        .crm-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .crm-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+        .crm-card ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .crm-card ul li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-secondary); }
+        .crm-card ul li::before { content: '✓'; color: var(--green-primary); font-weight: bold; }
+        .crm-visual { background: var(--bg-dark); border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
+        .kanban-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .kanban-column { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 12px; }
+        .kanban-column-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid; }
+        .kanban-column:nth-child(1) .kanban-column-header { border-color: #f59e0b; color: #f59e0b; }
+        .kanban-column:nth-child(2) .kanban-column-header { border-color: #3b82f6; color: #3b82f6; }
+        .kanban-column:nth-child(3) .kanban-column-header { border-color: #8b5cf6; color: #8b5cf6; }
+        .kanban-column:nth-child(4) .kanban-column-header { border-color: #22c55e; color: #22c55e; }
+        .kanban-card { background: var(--bg-card); border-radius: 6px; padding: 10px; margin-bottom: 8px; font-size: 11px; color: var(--text-secondary); border: 1px solid var(--border-color); }
+
+        /* Plans */
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .plan-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; position: relative; }
+        .plan-card:hover { transform: translateY(-8px); border-color: var(--green-primary); }
+        .plan-card.featured { border-color: var(--green-primary); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, var(--bg-card) 100%); }
+        .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--gradient-green); color: white; padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+        .plan-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 24px; }
+        .plan-card.featured .plan-icon { background: rgba(34, 197, 94, 0.2); }
+        .plan-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .plan-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+        .plan-features { list-style: none; margin-bottom: 32px; }
+        .plan-features li { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-secondary); }
+        .plan-features li:last-child { border-bottom: none; }
+        .plan-features li::before { content: '✓'; width: 20px; height: 20px; background: rgba(34, 197, 94, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--green-primary); flex-shrink: 0; }
+        .plan-cta { width: 100%; padding: 14px; text-align: center; }
+
+        /* FAQ */
+        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; cursor: pointer; transition: all 0.3s; }
+        .faq-item:hover { border-color: rgba(34, 197, 94, 0.3); }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .faq-question h3 { font-size: 16px; font-weight: 600; }
+        .faq-icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--green-primary); flex-shrink: 0; }
+        .faq-answer { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); font-size: 14px; color: var(--text-secondary); line-height: 1.7; display: none; }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.05) 100%); }
+        .cta-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 60px; text-align: center; position: relative; overflow: hidden; }
+        .cta-card::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%); opacity: 0.3; pointer-events: none; }
+        .cta-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 16px; position: relative; }
+        .cta-card p { font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; position: relative; }
+        .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; }
+        .cta-contact { display: flex; justify-content: center; gap: 40px; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border-color); position: relative; }
+        .cta-contact-item { display: flex; align-items: center; gap: 12px; color: var(--text-secondary); font-size: 14px; }
+        .cta-contact-item span { font-size: 20px; }
+
+        /* Footer */
+        footer { padding: 60px 0 40px; border-top: 1px solid var(--border-color); }
+        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 40px; }
+        .footer-brand img { height: 40px; margin-bottom: 16px; }
+        .footer-brand p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+        .footer-social { display: flex; gap: 12px; }
+        .footer-social a { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); text-decoration: none; transition: all 0.3s; }
+        .footer-social a:hover { background: var(--green-primary); border-color: var(--green-primary); color: white; }
+        .footer-column h4 { font-size: 14px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary); }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+        .footer-column ul li a:hover { color: var(--green-primary); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 40px; border-top: 1px solid var(--border-color); font-size: 13px; color: var(--text-muted); }
+
+        /* WhatsApp Float */
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: var(--gradient-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; text-decoration: none; box-shadow: 0 8px 30px var(--green-glow); transition: all 0.3s; z-index: 99; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content, .api-content, .ia-content { grid-template-columns: 1fr; gap: 40px; }
+            .hero-visual { order: -1; }
+            .crm-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+            .crm-grid, .plans-grid, .faq-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero-stats { flex-wrap: wrap; gap: 24px; }
+            .floating-card { display: none; }
+            .api-stats { grid-template-columns: 1fr; gap: 20px; }
+            .kanban-preview { grid-template-columns: repeat(2, 1fr); }
+            .cta-contact { flex-direction: column; gap: 20px; }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">
+                    <img src="img/logo.png" alt="iZchat">
+                </a>
+                <nav>
+                    <a href="#funcionalidades">Funcionalidades</a>
+                    <a href="#api-oficial">API Oficial</a>
+                    <a href="#inteligencia-artificial">IA</a>
+                    <a href="#crm">CRM</a>
+                    <a href="#planos">Planos</a>
+                </nav>
+                <div class="nav-buttons">
+                    <a href="https://chat.izchat.com.br/" class="btn btn-secondary">Painel</a>
+                    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+Quero+saber+mais+sobre+o+iZchat.&type=phone_number&app_absent=0" class="btn btn-primary">Fale Conosco</a>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">API Oficial do WhatsApp</div>
+                    <h1>Atendimento <span>Inteligente</span> que Nunca Para</h1>
+                    <p>Transforme seu WhatsApp em uma central de atendimento profissional com IA autônoma, CRM integrado e a segurança da API Oficial. Automatize, venda mais e nunca perca seu número.</p>
+                    <div class="hero-buttons">
+                        <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+Quero+fazer+um+teste+gr%C3%A1tis+do+iZchat.&type=phone_number&app_absent=0" class="btn btn-primary">Teste Grátis por 7 Dias</a>
+                        <a href="https://chat.izchat.com.br/signup" class="btn btn-secondary">Criar Conta</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat"><div class="stat-value">24/7</div><div class="stat-label">Atendimento Automático</div></div>
+                        <div class="stat"><div class="stat-value">0%</div><div class="stat-label">Risco de Bloqueio</div></div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="img/fluxo.jpg" alt="Construtor de Fluxos iZchat" class="hero-image">
+                    <div class="floating-card card-1">
+                        <div class="card-icon green">🤖</div>
+                        <div class="card-text"><strong>IA Respondendo</strong><span>3 clientes agora</span></div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="card-icon purple">📈</div>
+                        <div class="card-text"><strong>+45 leads</strong><span>Capturados hoje</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="funcionalidades">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Funcionalidades</div>
+                <h2 class="section-title">Tudo que sua empresa precisa em uma só plataforma</h2>
+                <p class="section-subtitle">Multi-atendimento, automação inteligente e gestão completa de clientes para escalar seu negócio.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon">💬</div><h3>Multi-Atendimento</h3><p>Vários atendentes no mesmo número de WhatsApp, com histórico centralizado e controle de performance individual.</p></div>
+                <div class="feature-card"><div class="feature-icon">🔄</div><h3>Construtor de Fluxos</h3><p>Crie jornadas personalizadas com menus, tags, filas e integrações. Interface visual drag-and-drop sem precisar programar.</p></div>
+                <div class="feature-card"><div class="feature-icon">🌐</div><h3>Omnichannel</h3><p>WhatsApp, Instagram, Facebook e Webchat integrados em uma única plataforma com histórico unificado.</p></div>
+                <div class="feature-card"><div class="feature-icon">📊</div><h3>Relatórios em Tempo Real</h3><p>Dashboards completos com métricas de atendimento, performance da equipe e análise de conversões.</p></div>
+                <div class="feature-card"><div class="feature-icon">📅</div><h3>Agendamentos</h3><p>Agenda online integrada ao CRM com confirmações automáticas e distribuição inteligente de leads.</p></div>
+                <div class="feature-card"><div class="feature-icon">📢</div><h3>Disparos em Massa</h3><p>Campanhas segmentadas com controle de entregabilidade e análise de comportamento do cliente.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="api-oficial" class="api-section">
+        <div class="container">
+            <div class="api-content">
+                <div class="api-text">
+                    <div class="section-label">API Oficial do WhatsApp</div>
+                    <h2>Nunca Mais <span>Perca Seu Número</span></h2>
+                    <p>Diga adeus aos bloqueios e instabilidades. Com a API Oficial da Meta, seu atendimento funciona 24 horas com total segurança e confiabilidade.</p>
+                    <ul class="api-benefits">
+                        <li><div class="benefit-icon">🛡️</div><div class="benefit-text"><strong>Zero Risco de Bloqueio</strong><span>Conexão direta e oficial com os servidores da Meta</span></div></li>
+                        <li><div class="benefit-icon">✅</div><div class="benefit-text"><strong>Selo de Verificação</strong><span>Perfil comercial verificado transmite mais credibilidade</span></div></li>
+                        <li><div class="benefit-icon">⚡</div><div class="benefit-text"><strong>Alta Performance</strong><span>Envie milhares de mensagens sem quedas ou lentidão</span></div></li>
+                        <li><div class="benefit-icon">🔒</div><div class="benefit-text"><strong>Conformidade LGPD</strong><span>Dados protegidos e em conformidade com a legislação</span></div></li>
+                    </ul>
+                </div>
+                <div class="api-visual">
+                    <div class="api-card">
+                        <div class="shield-icon">🛡️</div>
+                        <h3>Proteção Total</h3>
+                        <p>Seu número comercial protegido com a infraestrutura oficial da Meta.</p>
+                        <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Quero+saber+mais+sobre+a+API+Oficial+do+WhatsApp&type=phone_number&app_absent=0" class="btn btn-primary">Saiba Mais</a>
+                        <div class="api-stats">
+                            <div class="api-stat"><div class="api-stat-value">99.9%</div><div class="api-stat-label">Uptime</div></div>
+                            <div class="api-stat"><div class="api-stat-value">0</div><div class="api-stat-label">Bloqueios</div></div>
+                            <div class="api-stat"><div class="api-stat-value">∞</div><div class="api-stat-label">Mensagens</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inteligencia-artificial" class="ia-section">
+        <div class="container">
+            <div class="ia-content">
+                <div class="ia-visual">
+                    <div class="ia-chat">
+                        <div class="ia-chat-header">
+                            <div class="ia-chat-avatar">🤖</div>
+                            <div class="ia-chat-info"><strong>Agente IA iZchat</strong><span>● Online agora</span></div>
+                        </div>
+                        <div class="ia-chat-messages">
+                            <div class="chat-message user">Olá, quero saber o preço do gás de cozinha</div>
+                            <div class="chat-message bot">Olá! 😊 Claro! O P13 está R$ 120,00 e o P45 está R$ 420,00. Posso agendar uma entrega para você?</div>
+                            <div class="chat-message user">Quero 2 P13 para amanhã de manhã</div>
+                            <div class="chat-message bot">Perfeito! 2 botijões P13 agendados para amanhã entre 8h-12h. Total: R$ 240,00. Qual o endereço de entrega?</div>
+                            <div class="chat-typing"><span></span><span></span><span></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ia-text">
+                    <div class="section-label">Inteligência Artificial</div>
+                    <h2>Seu Atendente <span>IA</span> Trabalhando 24 Horas</h2>
+                    <p>Enquanto você dorme, nosso agente de IA atende, qualifica e converte leads automaticamente. Respostas naturais e contextuais que encantam seus clientes.</p>
+                    <div class="ia-features">
+                        <div class="ia-feature"><div class="ia-feature-icon">🧠</div><div class="ia-feature-text"><strong>Respostas Inteligentes</strong><span>IA treinada para seu negócio específico</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon">📋</div><div class="ia-feature-text"><strong>Qualificação Automática</strong><span>Coleta dados e classifica leads automaticamente</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon">🔄</div><div class="ia-feature-text"><strong>Follow-up Inteligente</strong><span>Reengaja leads frios sem intervenção humana</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon">🎯</div><div class="ia-feature-text"><strong>Move o Pipeline</strong><span>Atualiza o CRM e executa regras comerciais</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="crm">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">CRM Integrado</div>
+                <h2 class="section-title">Gestão Completa de Leads e Vendas</h2>
+                <p class="section-subtitle">Pipeline visual, automações comerciais e relatórios que transformam conversas em negócios fechados.</p>
+            </div>
+            <div class="crm-grid">
+                <div class="crm-card featured">
+                    <div>
+                        <div class="crm-card-icon">📊</div>
+                        <h3>CRM Integrado com Agentes de IA</h3>
+                        <p>Visualize todo seu funil de vendas em um quadro intuitivo. Arraste e solte leads entre etapas e acompanhe o progresso de cada negociação em tempo real.</p>
+                        <ul><li>Etapas personalizáveis</li><li>Automações por movimentação</li><li>Previsão de fechamento</li><li>Histórico completo</li></ul>
+                    </div>
+                    <div class="crm-visual">
+                        <div class="kanban-preview">
+                            <div class="kanban-column"><div class="kanban-column-header">Novos</div><div class="kanban-card">Maria Silva - Orçamento</div><div class="kanban-card">João Pedro - Dúvida</div></div>
+                            <div class="kanban-column"><div class="kanban-column-header">Contato</div><div class="kanban-card">Ana Costa - Retorno</div></div>
+                            <div class="kanban-column"><div class="kanban-column-header">Proposta</div><div class="kanban-card">Carlos Mendes</div><div class="kanban-card">Rita Souza</div></div>
+                            <div class="kanban-column"><div class="kanban-column-header">Fechado</div><div class="kanban-card">Pedro Lima ✓</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="crm-card"><div class="crm-card-icon">🏷️</div><h3>Tags e Segmentação</h3><p>Organize seus contatos com tags personalizadas. Segmente por interesse, estágio de compra ou qualquer critério importante para seu negócio.</p></div>
+                <div class="crm-card"><div class="crm-card-icon">⚙️</div><h3>Automações Comerciais</h3><p>Configure regras automáticas: follow-ups, lembretes, movimentação de pipeline e notificações para nunca perder uma oportunidade.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="planos">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Planos</div>
+                <h2 class="section-title">Escolha o Plano Ideal para Seu Negócio</h2>
+                <p class="section-subtitle">Soluções flexíveis que crescem junto com sua empresa. Todos os planos incluem suporte humanizado.</p>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-icon">🚀</div>
+                    <div class="plan-name">Starter</div>
+                    <p class="plan-desc">Ideal para começar a automatizar seu atendimento</p>
+                    <ul class="plan-features">
+                        <li>1 Conexão WhatsApp</li>
+                        <li>5 Usuários</li>
+                        <li>API Oficial do WhatsApp</li>
+                        <li>CRM Completo</li>
+                        <li>Inteligência Artificial</li>
+                        <li>Disparos em Massa</li>
+                        <li>Construtor de Fluxos</li>
+                    </ul>
+                    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Starter+do+iZchat&type=phone_number&app_absent=0" class="btn btn-outline plan-cta">Consultar Valores</a>
+                </div>
+                <div class="plan-card featured">
+                    <div class="plan-badge">Mais Popular</div>
+                    <div class="plan-icon">⭐</div>
+                    <div class="plan-name">Professional</div>
+                    <p class="plan-desc">Para empresas que querem escalar com IA</p>
+                    <ul class="plan-features">
+                        <li>2 Conexões WhatsApp</li>
+                        <li>10 Usuários</li>
+                        <li>API Oficial do WhatsApp</li>
+                        <li>CRM Completo</li>
+                        <li>Inteligência Artificial</li>
+                        <li>Disparos em Massa</li>
+                        <li>Construtor de Fluxos</li>
+                        <li>Suporte Prioritário</li>
+                    </ul>
+                    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Professional+do+iZchat&type=phone_number&app_absent=0" class="btn btn-primary plan-cta">Consultar Valores</a>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-icon">🏢</div>
+                    <div class="plan-name">Enterprise</div>
+                    <p class="plan-desc">Solução completa para grandes operações</p>
+                    <ul class="plan-features">
+                        <li>Mais de 15 Usuários</li>
+                        <li>API Oficial do WhatsApp</li>
+                        <li>CRM Completo</li>
+                        <li>Inteligência Artificial</li>
+                        <li>Disparos em Massa</li>
+                        <li>Construtor de Fluxos</li>
+                        <li>Gerente de Conta Dedicado</li>
+                        <li>SLA Garantido</li>
+                    </ul>
+                    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Enterprise+do+iZchat&type=phone_number&app_absent=0" class="btn btn-outline plan-cta">Consultar Valores</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Dúvidas Frequentes</div>
+                <h2 class="section-title">Respostas Rápidas</h2>
+                <p class="section-subtitle">Tire suas principais dúvidas sobre o iZchat.</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item"><div class="faq-question"><h3>O que é a API Oficial do WhatsApp?</h3><span class="faq-icon">+</span></div><div class="faq-answer">É a conexão direta e oficial com os servidores da Meta/WhatsApp. Diferente de conexões não oficiais (QR Code), a API Oficial não sofre bloqueios, é mais estável e permite envio de mensagens em larga escala com total segurança.</div></div>
+                <div class="faq-item"><div class="faq-question"><h3>Como funciona a IA do iZchat?</h3><span class="faq-icon">+</span></div><div class="faq-answer">Nossa IA é treinada especificamente para seu negócio. Ela entende o contexto das conversas, responde perguntas frequentes, qualifica leads, agenda atendimentos e pode até mover clientes pelo seu funil de vendas automaticamente.</div></div>
+                <div class="faq-item"><div class="faq-question"><h3>Posso testar antes de contratar?</h3><span class="faq-icon">+</span></div><div class="faq-answer">Sim! Oferecemos 7 dias de teste gratuito para você conhecer todas as funcionalidades da plataforma. Basta entrar em contato pelo WhatsApp e nossa equipe fará a ativação.</div></div>
+                <div class="faq-item"><div class="faq-question"><h3>Quantos usuários podem usar?</h3><span class="faq-icon">+</span></div><div class="faq-answer">A quantidade de usuários varia conforme o plano escolhido. Cada usuário tem seu próprio login e permissões individuais, podendo atender simultaneamente pelo mesmo número de WhatsApp.</div></div>
+                <div class="faq-item"><div class="faq-question"><h3>Funciona com Instagram e Facebook?</h3><span class="faq-icon">+</span></div><div class="faq-answer">Sim! O iZchat é omnichannel. Você pode integrar WhatsApp, Instagram Direct, Facebook Messenger e Webchat em uma única plataforma, com histórico unificado de todos os canais.</div></div>
+                <div class="faq-item"><div class="faq-question"><h3>Vocês oferecem suporte?</h3><span class="faq-icon">+</span></div><div class="faq-answer">Sim! Oferecemos suporte humanizado via WhatsApp de segunda a sexta, das 8h às 18h. Planos Professional e Enterprise contam com suporte prioritário e gerente de conta dedicado.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Pronto para Transformar Seu Atendimento?</h2>
+                <p>Comece hoje mesmo e veja a diferença que a automação inteligente faz no seu negócio.</p>
+                <div class="cta-buttons">
+                    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+Quero+fazer+um+teste+gr%C3%A1tis+do+iZchat!&type=phone_number&app_absent=0" class="btn btn-primary">Teste Grátis por 7 Dias</a>
+                    <a href="https://chat.izchat.com.br/signup" class="btn btn-secondary">Criar Minha Conta</a>
+                </div>
+                <div class="cta-contact">
+                    <div class="cta-contact-item"><span>📱</span>(67) 98135-5555</div>
+                    <div class="cta-contact-item"><span>📧</span>contato@izchat.com.br</div>
+                    <div class="cta-contact-item"><span>🕐</span>Seg-Sex: 8h às 18h</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="img/logo.png" alt="iZchat">
+                    <p>Plataforma completa de atendimento com IA, CRM integrado e automação inteligente para WhatsApp.</p>
+                    <div class="footer-social"><a href="#" title="Instagram">📷</a><a href="#" title="Facebook">📘</a><a href="#" title="LinkedIn">💼</a></div>
+                </div>
+                <div class="footer-column"><h4>Plataforma</h4><ul><li><a href="#funcionalidades">Funcionalidades</a></li><li><a href="#api-oficial">API Oficial</a></li><li><a href="#inteligencia-artificial">Inteligência Artificial</a></li><li><a href="#crm">CRM</a></li></ul></div>
+                <div class="footer-column"><h4>Empresa</h4><ul><li><a href="#planos">Planos</a></li><li><a href="#faq">FAQ</a></li><li><a href="https://chat.izchat.com.br/">Painel</a></li><li><a href="https://api.whatsapp.com/send/?phone=5567981355555">Contato</a></li></ul></div>
+                <div class="footer-column"><h4>Legal</h4><ul><li><a href="https://izchat.com.br/politica-de-privacidade-izchat/">Política de Privacidade</a></li><li><a href="#">Termos de Uso</a></li></ul></div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 iZchat. Todos os direitos reservados. CNPJ: 58.169.089/0001-02</p>
+                <p>Desenvolvido em Campo Grande, MS 🇧🇷</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+vim+pelo+site+e+quero+saber+mais+sobre+o+iZchat.&type=phone_number&app_absent=0" class="whatsapp-float" title="Fale Conosco no WhatsApp">💬</a>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const answer = this.querySelector('.faq-answer');
+                const icon = this.querySelector('.faq-icon');
+                const isOpen = answer.style.display === 'block';
+                answer.style.display = isOpen ? 'none' : 'block';
+                icon.textContent = isOpen ? '+' : '−';
+            });
+        });
+    </script>
+</body>
+</html>

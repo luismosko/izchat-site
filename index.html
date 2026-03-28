@@ -13,26 +13,32 @@
             --green-primary: #22c55e;
             --green-dark: #16a34a;
             --green-light: #4ade80;
-            --green-glow: rgba(34, 197, 94, 0.3);
-            --purple-primary: #8b5cf6;
-            --purple-dark: #7c3aed;
-            --purple-light: #a78bfa;
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a25;
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --border-color: rgba(255,255,255,0.08);
+            --green-glow: rgba(34, 197, 94, 0.15);
+            --purple-primary: #7c3aed;
+            --purple-dark: #6d28d9;
+            --purple-light: #8b5cf6;
+            --bg-light: #ffffff;
+            --bg-section: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: rgba(0,0,0,0.08);
+            --border-strong: rgba(0,0,0,0.12);
             --gradient-green: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-dark);
+            background: var(--bg-light);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
@@ -43,15 +49,16 @@
         /* Header */
         header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 16px 0; background: rgba(10, 10, 15, 0.8);
+            padding: 12px 0; background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
         }
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo img { height: 40px; width: auto; }
+        .logo img { height: 55px; width: auto; }
         nav { display: flex; align-items: center; gap: 32px; }
         nav a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; }
-        nav a:hover { color: var(--text-primary); }
+        nav a:hover { color: var(--green-primary); }
         .nav-buttons { display: flex; gap: 12px; }
 
         .btn {
@@ -59,32 +66,38 @@
             padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
             text-decoration: none; cursor: pointer; transition: all 0.3s; border: none;
         }
-        .btn-primary { background: var(--gradient-green); color: white; box-shadow: 0 4px 20px var(--green-glow); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--green-glow); }
-        .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
-        .btn-secondary:hover { background: var(--bg-card); border-color: var(--green-primary); }
-        .btn-outline { background: transparent; color: var(--green-primary); border: 1px solid var(--green-primary); }
+        .btn-primary { background: var(--gradient-green); color: white; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4); }
+        .btn-secondary { background: var(--bg-section); color: var(--text-primary); border: 1px solid var(--border-strong); }
+        .btn-secondary:hover { background: var(--bg-card-hover); border-color: var(--green-primary); }
+        .btn-outline { background: transparent; color: var(--green-primary); border: 2px solid var(--green-primary); }
         .btn-outline:hover { background: var(--green-primary); color: white; }
+
+        /* Icon styles */
+        .icon { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+        .icon-lg { width: 28px; height: 28px; }
+        .icon-xl { width: 32px; height: 32px; }
 
         /* Hero */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
             padding: 120px 0 80px; position: relative; overflow: hidden;
+            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
         }
         .hero::before {
             content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 800px; background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+            width: 800px; height: 800px; background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
             pointer-events: none;
         }
         .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
             background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 100px; font-size: 13px; color: var(--green-primary); margin-bottom: 24px;
+            border-radius: 100px; font-size: 13px; color: var(--green-dark); margin-bottom: 24px; font-weight: 600;
         }
         .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--green-primary); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; color: var(--text-primary); }
         .hero h1 span { background: var(--gradient-green); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .hero p { font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; max-width: 500px; }
         .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -92,18 +105,18 @@
         .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--green-primary); }
         .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
         .hero-visual { position: relative; }
-        .hero-image { width: 100%; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+        .hero-image { width: 100%; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-xl); }
         .floating-card {
             position: absolute; background: var(--bg-card); border: 1px solid var(--border-color);
             border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: float 6s ease-in-out infinite;
+            box-shadow: var(--shadow-lg); animation: float 6s ease-in-out infinite;
         }
         .floating-card.card-1 { top: -20px; right: -30px; }
         .floating-card.card-2 { bottom: 60px; left: -40px; animation-delay: -3s; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .card-icon.green { background: rgba(34, 197, 94, 0.15); }
-        .card-icon.purple { background: rgba(139, 92, 246, 0.15); }
+        .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .card-icon.green { background: rgba(34, 197, 94, 0.15); color: var(--green-primary); }
+        .card-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--purple-primary); }
         .card-text { font-size: 13px; }
         .card-text strong { display: block; font-weight: 600; color: var(--text-primary); }
         .card-text span { color: var(--text-muted); }
@@ -112,124 +125,126 @@
         section { padding: 100px 0; position: relative; }
         .section-header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
         .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--green-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
-        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; margin-bottom: 16px; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
         .section-subtitle { font-size: 17px; color: var(--text-secondary); }
 
         /* Features */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .feature-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s; }
-        .feature-card:hover { background: var(--bg-card-hover); border-color: rgba(34, 197, 94, 0.3); transform: translateY(-4px); }
-        .feature-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); }
-        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+        .feature-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; transition: all 0.3s; box-shadow: var(--shadow-sm); }
+        .feature-card:hover { background: var(--bg-card); border-color: rgba(34, 197, 94, 0.4); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .feature-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); color: var(--green-primary); }
+        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
         .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
 
         /* API Section */
-        .api-section { background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.03) 50%, transparent 100%); }
+        .api-section { background: var(--bg-section); }
         .api-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .api-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; }
+        .api-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; color: var(--text-primary); }
         .api-text h2 span { color: var(--green-primary); }
         .api-text > p { font-size: 17px; color: var(--text-secondary); margin-bottom: 32px; }
         .api-benefits { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-        .api-benefits li { display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); }
-        .benefit-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
-        .benefit-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .api-benefits li { display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .benefit-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--green-primary); }
+        .benefit-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); }
         .benefit-text span { font-size: 13px; color: var(--text-muted); }
-        .api-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; text-align: center; }
-        .shield-icon { width: 100px; height: 100px; margin: 0 auto 24px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px; border: 2px solid rgba(34, 197, 94, 0.3); }
-        .api-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+        .api-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; text-align: center; box-shadow: var(--shadow-md); }
+        .shield-icon { width: 100px; height: 100px; margin: 0 auto 24px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(34, 197, 94, 0.3); color: var(--green-primary); }
+        .api-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
         .api-card p { color: var(--text-secondary); margin-bottom: 24px; }
         .api-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-color); }
         .api-stat { text-align: center; }
         .api-stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--green-primary); }
         .api-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .meta-partner { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-color); }
+        .meta-partner img { height: 50px; width: auto; opacity: 0.9; }
+        .meta-partner p { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
 
         /* IA Section */
-        .ia-section { background: var(--bg-card); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .ia-section { background: linear-gradient(180deg, var(--bg-section) 0%, #f0fdf4 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
         .ia-content { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .ia-chat { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; }
-        .ia-chat-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.02); }
-        .ia-chat-avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-green); display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .ia-chat-info strong { display: block; font-size: 14px; }
+        .ia-chat { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
+        .ia-chat-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border-color); background: var(--bg-section); }
+        .ia-chat-avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--gradient-green); display: flex; align-items: center; justify-content: center; color: white; }
+        .ia-chat-info strong { display: block; font-size: 14px; color: var(--text-primary); }
         .ia-chat-info span { font-size: 12px; color: var(--green-primary); }
-        .ia-chat-messages { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .ia-chat-messages { padding: 20px; display: flex; flex-direction: column; gap: 16px; background: #fafafa; }
         .chat-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
         .chat-message.user { align-self: flex-end; background: var(--gradient-green); color: white; border-bottom-right-radius: 4px; }
-        .chat-message.bot { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; }
+        .chat-message.bot { align-self: flex-start; background: var(--bg-card); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; color: var(--text-primary); }
         .chat-typing { display: flex; gap: 4px; padding: 12px 16px; align-self: flex-start; }
         .chat-typing span { width: 8px; height: 8px; background: var(--text-muted); border-radius: 50%; animation: typing 1.4s infinite; }
         .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
         .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
-        .ia-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; }
+        .ia-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 24px; color: var(--text-primary); }
         .ia-text h2 span { background: var(--gradient-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .ia-text > p { font-size: 17px; color: var(--text-secondary); margin-bottom: 32px; }
         .ia-features { display: grid; gap: 16px; }
-        .ia-feature { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--bg-dark); border-radius: 12px; border: 1px solid var(--border-color); }
-        .ia-feature-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-        .ia-feature-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .ia-feature { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .ia-feature-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--purple-primary); }
+        .ia-feature-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
         .ia-feature-text span { font-size: 13px; color: var(--text-muted); }
 
         /* CRM Section */
         .crm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .crm-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; }
-        .crm-card:hover { border-color: rgba(139, 92, 246, 0.3); }
-        .crm-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(34, 197, 94, 0.08) 100%); }
-        .crm-card-icon { width: 60px; height: 60px; border-radius: 14px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; }
-        .crm-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .crm-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; box-shadow: var(--shadow-sm); }
+        .crm-card:hover { border-color: rgba(139, 92, 246, 0.3); box-shadow: var(--shadow-md); }
+        .crm-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%); }
+        .crm-card-icon { width: 60px; height: 60px; border-radius: 14px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--purple-primary); }
+        .crm-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
         .crm-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
         .crm-card ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
         .crm-card ul li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-secondary); }
-        .crm-card ul li::before { content: '✓'; color: var(--green-primary); font-weight: bold; }
-        .crm-visual { background: var(--bg-dark); border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
+        .crm-card ul li svg { color: var(--green-primary); flex-shrink: 0; }
+        .crm-visual { background: var(--bg-section); border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
         .kanban-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .kanban-column { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 12px; }
+        .kanban-column { background: var(--bg-card); border-radius: 8px; padding: 12px; border: 1px solid var(--border-color); }
         .kanban-column-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid; }
         .kanban-column:nth-child(1) .kanban-column-header { border-color: #f59e0b; color: #f59e0b; }
         .kanban-column:nth-child(2) .kanban-column-header { border-color: #3b82f6; color: #3b82f6; }
         .kanban-column:nth-child(3) .kanban-column-header { border-color: #8b5cf6; color: #8b5cf6; }
         .kanban-column:nth-child(4) .kanban-column-header { border-color: #22c55e; color: #22c55e; }
-        .kanban-card { background: var(--bg-card); border-radius: 6px; padding: 10px; margin-bottom: 8px; font-size: 11px; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .kanban-card { background: var(--bg-section); border-radius: 6px; padding: 10px; margin-bottom: 8px; font-size: 11px; color: var(--text-secondary); border: 1px solid var(--border-color); }
 
         /* Plans */
         .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .plan-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; position: relative; }
-        .plan-card:hover { transform: translateY(-8px); border-color: var(--green-primary); }
-        .plan-card.featured { border-color: var(--green-primary); background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, var(--bg-card) 100%); }
+        .plan-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px; transition: all 0.3s; position: relative; box-shadow: var(--shadow-sm); }
+        .plan-card:hover { transform: translateY(-8px); border-color: var(--green-primary); box-shadow: var(--shadow-lg); }
+        .plan-card.featured { border-color: var(--green-primary); background: linear-gradient(180deg, rgba(34, 197, 94, 0.05) 0%, var(--bg-card) 100%); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.15); }
         .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--gradient-green); color: white; padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; }
-        .plan-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 24px; }
+        .plan-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--green-primary); }
         .plan-card.featured .plan-icon { background: rgba(34, 197, 94, 0.2); }
-        .plan-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .plan-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
         .plan-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
         .plan-features { list-style: none; margin-bottom: 32px; }
-        .plan-features li { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-secondary); }
-        .plan-features li:last-child { border-bottom: none; }
-        .plan-features li::before { content: '✓'; width: 20px; height: 20px; background: rgba(34, 197, 94, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--green-primary); flex-shrink: 0; }
-        .plan-cta { width: 100%; padding: 14px; text-align: center; }
+        .plan-features li { padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
+        .plan-features li svg { color: var(--green-primary); flex-shrink: 0; }
+        .plan-cta { width: 100%; text-align: center; }
 
         /* FAQ */
-        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .faq-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px; cursor: pointer; transition: all 0.3s; }
-        .faq-item:hover { border-color: rgba(34, 197, 94, 0.3); }
+        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-sm); }
+        .faq-item:hover { border-color: var(--green-primary); box-shadow: var(--shadow-md); }
         .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-        .faq-question h3 { font-size: 16px; font-weight: 600; }
-        .faq-icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--green-primary); flex-shrink: 0; }
+        .faq-question h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        .faq-icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--green-primary); flex-shrink: 0; font-weight: 300; }
         .faq-answer { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); font-size: 14px; color: var(--text-secondary); line-height: 1.7; display: none; }
 
         /* CTA */
-        .cta-section { background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.05) 100%); }
-        .cta-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 60px; text-align: center; position: relative; overflow: hidden; }
-        .cta-card::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%); opacity: 0.3; pointer-events: none; }
-        .cta-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 16px; position: relative; }
+        .cta-section { background: linear-gradient(180deg, var(--bg-light) 0%, #f0fdf4 100%); }
+        .cta-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 60px; text-align: center; position: relative; overflow: hidden; box-shadow: var(--shadow-xl); }
+        .cta-card::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%); pointer-events: none; }
+        .cta-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 16px; position: relative; color: var(--text-primary); }
         .cta-card p { font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; position: relative; }
         .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; }
         .cta-contact { display: flex; justify-content: center; gap: 40px; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border-color); position: relative; }
         .cta-contact-item { display: flex; align-items: center; gap: 12px; color: var(--text-secondary); font-size: 14px; }
-        .cta-contact-item span { font-size: 20px; }
+        .cta-contact-item svg { color: var(--green-primary); }
 
         /* Footer */
-        footer { padding: 60px 0 40px; border-top: 1px solid var(--border-color); }
+        footer { padding: 60px 0 40px; border-top: 1px solid var(--border-color); background: var(--bg-section); }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 40px; }
-        .footer-brand img { height: 40px; margin-bottom: 16px; }
+        .footer-brand img { height: 50px; margin-bottom: 16px; }
         .footer-brand p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
         .footer-social { display: flex; gap: 12px; }
         .footer-social a { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); text-decoration: none; transition: all 0.3s; }
@@ -239,13 +254,13 @@
         .footer-column ul li { margin-bottom: 12px; }
         .footer-column ul li a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
         .footer-column ul li a:hover { color: var(--green-primary); }
-        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 40px; border-top: 1px solid var(--border-color); font-size: 13px; color: var(--text-muted); }
+        .footer-bottom { display: flex; justify-content: center; align-items: center; padding-top: 40px; border-top: 1px solid var(--border-color); font-size: 13px; color: var(--text-muted); }
 
         /* WhatsApp Float */
-        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: var(--gradient-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; text-decoration: none; box-shadow: 0 8px 30px var(--green-glow); transition: all 0.3s; z-index: 99; }
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: var(--gradient-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4); transition: all 0.3s; z-index: 99; }
         .whatsapp-float:hover { transform: scale(1.1); }
 
-        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); font-size: 24px; cursor: pointer; }
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -265,6 +280,7 @@
             .cta-contact { flex-direction: column; gap: 20px; }
             .footer-content { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .logo img { height: 45px; }
         }
     </style>
 </head>
@@ -273,7 +289,7 @@
         <div class="container">
             <div class="header-inner">
                 <a href="#" class="logo">
-                    <img src="img/logo.png" alt="iZchat">
+                    <img src="img/logo-transp.png" alt="iZchat">
                 </a>
                 <nav>
                     <a href="#funcionalidades">Funcionalidades</a>
@@ -310,11 +326,11 @@
                 <div class="hero-visual">
                     <img src="img/fluxo.jpg" alt="Construtor de Fluxos iZchat" class="hero-image">
                     <div class="floating-card card-1">
-                        <div class="card-icon green">🤖</div>
+                        <div class="card-icon green"><svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
                         <div class="card-text"><strong>IA Respondendo</strong><span>3 clientes agora</span></div>
                     </div>
                     <div class="floating-card card-2">
-                        <div class="card-icon purple">📈</div>
+                        <div class="card-icon purple"><svg class="icon" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
                         <div class="card-text"><strong>+45 leads</strong><span>Capturados hoje</span></div>
                     </div>
                 </div>
@@ -330,12 +346,36 @@
                 <p class="section-subtitle">Multi-atendimento, automação inteligente e gestão completa de clientes para escalar seu negócio.</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card"><div class="feature-icon">💬</div><h3>Multi-Atendimento</h3><p>Vários atendentes no mesmo número de WhatsApp, com histórico centralizado e controle de performance individual.</p></div>
-                <div class="feature-card"><div class="feature-icon">🔄</div><h3>Construtor de Fluxos</h3><p>Crie jornadas personalizadas com menus, tags, filas e integrações. Interface visual drag-and-drop sem precisar programar.</p></div>
-                <div class="feature-card"><div class="feature-icon">🌐</div><h3>Omnichannel</h3><p>WhatsApp, Instagram, Facebook e Webchat integrados em uma única plataforma com histórico unificado.</p></div>
-                <div class="feature-card"><div class="feature-icon">📊</div><h3>Relatórios em Tempo Real</h3><p>Dashboards completos com métricas de atendimento, performance da equipe e análise de conversões.</p></div>
-                <div class="feature-card"><div class="feature-icon">📅</div><h3>Agendamentos</h3><p>Agenda online integrada ao CRM com confirmações automáticas e distribuição inteligente de leads.</p></div>
-                <div class="feature-card"><div class="feature-icon">📢</div><h3>Disparos em Massa</h3><p>Campanhas segmentadas com controle de entregabilidade e análise de comportamento do cliente.</p></div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    <h3>Multi-Atendimento</h3>
+                    <p>Vários atendentes no mesmo número de WhatsApp, com histórico centralizado e controle de performance individual.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></div>
+                    <h3>Construtor de Fluxos</h3>
+                    <p>Crie jornadas personalizadas com menus, tags, filas e integrações. Interface visual drag-and-drop sem precisar programar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                    <h3>Omnichannel</h3>
+                    <p>WhatsApp, Instagram, Facebook e Webchat integrados em uma única plataforma com histórico unificado.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+                    <h3>Relatórios em Tempo Real</h3>
+                    <p>Dashboards completos com métricas de atendimento, performance da equipe e análise de conversões.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                    <h3>Agendamentos</h3>
+                    <p>Agenda online integrada ao CRM com confirmações automáticas e distribuição inteligente de leads.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+                    <h3>Disparos em Massa</h3>
+                    <p>Campanhas segmentadas com controle de entregabilidade e análise de comportamento do cliente.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -348,15 +388,15 @@
                     <h2>Nunca Mais <span>Perca Seu Número</span></h2>
                     <p>Diga adeus aos bloqueios e instabilidades. Com a API Oficial da Meta, seu atendimento funciona 24 horas com total segurança e confiabilidade.</p>
                     <ul class="api-benefits">
-                        <li><div class="benefit-icon">🛡️</div><div class="benefit-text"><strong>Zero Risco de Bloqueio</strong><span>Conexão direta e oficial com os servidores da Meta</span></div></li>
-                        <li><div class="benefit-icon">✅</div><div class="benefit-text"><strong>Selo de Verificação</strong><span>Perfil comercial verificado transmite mais credibilidade</span></div></li>
-                        <li><div class="benefit-icon">⚡</div><div class="benefit-text"><strong>Alta Performance</strong><span>Envie milhares de mensagens sem quedas ou lentidão</span></div></li>
-                        <li><div class="benefit-icon">🔒</div><div class="benefit-text"><strong>Conformidade LGPD</strong><span>Dados protegidos e em conformidade com a legislação</span></div></li>
+                        <li><div class="benefit-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="benefit-text"><strong>Zero Risco de Bloqueio</strong><span>Conexão direta e oficial com os servidores da Meta</span></div></li>
+                        <li><div class="benefit-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="benefit-text"><strong>Selo de Verificação</strong><span>Perfil comercial verificado transmite mais credibilidade</span></div></li>
+                        <li><div class="benefit-icon"><svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="benefit-text"><strong>Alta Performance</strong><span>Envie milhares de mensagens sem quedas ou lentidão</span></div></li>
+                        <li><div class="benefit-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="benefit-text"><strong>Conformidade LGPD</strong><span>Dados protegidos e em conformidade com a legislação</span></div></li>
                     </ul>
                 </div>
                 <div class="api-visual">
                     <div class="api-card">
-                        <div class="shield-icon">🛡️</div>
+                        <div class="shield-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                         <h3>Proteção Total</h3>
                         <p>Seu número comercial protegido com a infraestrutura oficial da Meta.</p>
                         <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Quero+saber+mais+sobre+a+API+Oficial+do+WhatsApp&type=phone_number&app_absent=0" class="btn btn-primary">Saiba Mais</a>
@@ -364,6 +404,10 @@
                             <div class="api-stat"><div class="api-stat-value">99.9%</div><div class="api-stat-label">Uptime</div></div>
                             <div class="api-stat"><div class="api-stat-value">0</div><div class="api-stat-label">Bloqueios</div></div>
                             <div class="api-stat"><div class="api-stat-value">∞</div><div class="api-stat-label">Mensagens</div></div>
+                        </div>
+                        <div class="meta-partner">
+                            <img src="img/meta-api-partner.png" alt="Meta Business Partner">
+                            <p>Parceiro oficial certificado</p>
                         </div>
                     </div>
                 </div>
@@ -377,12 +421,12 @@
                 <div class="ia-visual">
                     <div class="ia-chat">
                         <div class="ia-chat-header">
-                            <div class="ia-chat-avatar">🤖</div>
+                            <div class="ia-chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
                             <div class="ia-chat-info"><strong>Agente IA iZchat</strong><span>● Online agora</span></div>
                         </div>
                         <div class="ia-chat-messages">
                             <div class="chat-message user">Olá, quero saber o preço do gás de cozinha</div>
-                            <div class="chat-message bot">Olá! 😊 Claro! O P13 está R$ 120,00 e o P45 está R$ 420,00. Posso agendar uma entrega para você?</div>
+                            <div class="chat-message bot">Olá! Claro! O P13 está R$ 120,00 e o P45 está R$ 420,00. Posso agendar uma entrega para você?</div>
                             <div class="chat-message user">Quero 2 P13 para amanhã de manhã</div>
                             <div class="chat-message bot">Perfeito! 2 botijões P13 agendados para amanhã entre 8h-12h. Total: R$ 240,00. Qual o endereço de entrega?</div>
                             <div class="chat-typing"><span></span><span></span><span></span></div>
@@ -394,10 +438,10 @@
                     <h2>Seu Atendente <span>IA</span> Trabalhando 24 Horas</h2>
                     <p>Enquanto você dorme, nosso agente de IA atende, qualifica e converte leads automaticamente. Respostas naturais e contextuais que encantam seus clientes.</p>
                     <div class="ia-features">
-                        <div class="ia-feature"><div class="ia-feature-icon">🧠</div><div class="ia-feature-text"><strong>Respostas Inteligentes</strong><span>IA treinada para seu negócio específico</span></div></div>
-                        <div class="ia-feature"><div class="ia-feature-icon">📋</div><div class="ia-feature-text"><strong>Qualificação Automática</strong><span>Coleta dados e classifica leads automaticamente</span></div></div>
-                        <div class="ia-feature"><div class="ia-feature-icon">🔄</div><div class="ia-feature-text"><strong>Follow-up Inteligente</strong><span>Reengaja leads frios sem intervenção humana</span></div></div>
-                        <div class="ia-feature"><div class="ia-feature-icon">🎯</div><div class="ia-feature-text"><strong>Move o Pipeline</strong><span>Atualiza o CRM e executa regras comerciais</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="ia-feature-text"><strong>Respostas Inteligentes</strong><span>IA treinada para seu negócio específico</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div><div class="ia-feature-text"><strong>Qualificação Automática</strong><span>Coleta dados e classifica leads automaticamente</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon"><svg class="icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div><div class="ia-feature-text"><strong>Follow-up Inteligente</strong><span>Reengaja leads frios sem intervenção humana</span></div></div>
+                        <div class="ia-feature"><div class="ia-feature-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="ia-feature-text"><strong>Move o Pipeline</strong><span>Atualiza o CRM e executa regras comerciais</span></div></div>
                     </div>
                 </div>
             </div>
@@ -414,10 +458,15 @@
             <div class="crm-grid">
                 <div class="crm-card featured">
                     <div>
-                        <div class="crm-card-icon">📊</div>
+                        <div class="crm-card-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
                         <h3>CRM Integrado com Agentes de IA</h3>
                         <p>Visualize todo seu funil de vendas em um quadro intuitivo. Arraste e solte leads entre etapas e acompanhe o progresso de cada negociação em tempo real.</p>
-                        <ul><li>Etapas personalizáveis</li><li>Automações por movimentação</li><li>Previsão de fechamento</li><li>Histórico completo</li></ul>
+                        <ul>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Etapas personalizáveis</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Automações por movimentação</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Previsão de fechamento</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Histórico completo</li>
+                        </ul>
                     </div>
                     <div class="crm-visual">
                         <div class="kanban-preview">
@@ -428,8 +477,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="crm-card"><div class="crm-card-icon">🏷️</div><h3>Tags e Segmentação</h3><p>Organize seus contatos com tags personalizadas. Segmente por interesse, estágio de compra ou qualquer critério importante para seu negócio.</p></div>
-                <div class="crm-card"><div class="crm-card-icon">⚙️</div><h3>Automações Comerciais</h3><p>Configure regras automáticas: follow-ups, lembretes, movimentação de pipeline e notificações para nunca perder uma oportunidade.</p></div>
+                <div class="crm-card"><div class="crm-card-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><h3>Tags e Segmentação</h3><p>Organize seus contatos com tags personalizadas. Segmente por interesse, estágio de compra ou qualquer critério importante para seu negócio.</p></div>
+                <div class="crm-card"><div class="crm-card-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>Automações Comerciais</h3><p>Configure regras automáticas: follow-ups, lembretes, movimentação de pipeline e notificações para nunca perder uma oportunidade.</p></div>
             </div>
         </div>
     </section>
@@ -443,50 +492,50 @@
             </div>
             <div class="plans-grid">
                 <div class="plan-card">
-                    <div class="plan-icon">🚀</div>
+                    <div class="plan-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
                     <div class="plan-name">Starter</div>
                     <p class="plan-desc">Ideal para começar a automatizar seu atendimento</p>
                     <ul class="plan-features">
-                        <li>1 Conexão WhatsApp</li>
-                        <li>5 Usuários</li>
-                        <li>API Oficial do WhatsApp</li>
-                        <li>CRM Completo</li>
-                        <li>Inteligência Artificial</li>
-                        <li>Disparos em Massa</li>
-                        <li>Construtor de Fluxos</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 Conexão WhatsApp</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>5 Usuários</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>API Oficial do WhatsApp</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRM Completo</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inteligência Artificial</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Disparos em Massa</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Construtor de Fluxos</li>
                     </ul>
                     <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Starter+do+iZchat&type=phone_number&app_absent=0" class="btn btn-outline plan-cta">Consultar Valores</a>
                 </div>
                 <div class="plan-card featured">
                     <div class="plan-badge">Mais Popular</div>
-                    <div class="plan-icon">⭐</div>
+                    <div class="plan-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
                     <div class="plan-name">Professional</div>
                     <p class="plan-desc">Para empresas que querem escalar com IA</p>
                     <ul class="plan-features">
-                        <li>2 Conexões WhatsApp</li>
-                        <li>10 Usuários</li>
-                        <li>API Oficial do WhatsApp</li>
-                        <li>CRM Completo</li>
-                        <li>Inteligência Artificial</li>
-                        <li>Disparos em Massa</li>
-                        <li>Construtor de Fluxos</li>
-                        <li>Suporte Prioritário</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>2 Conexões WhatsApp</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>10 Usuários</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>API Oficial do WhatsApp</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRM Completo</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inteligência Artificial</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Disparos em Massa</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Construtor de Fluxos</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Suporte Prioritário</li>
                     </ul>
                     <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Professional+do+iZchat&type=phone_number&app_absent=0" class="btn btn-primary plan-cta">Consultar Valores</a>
                 </div>
                 <div class="plan-card">
-                    <div class="plan-icon">🏢</div>
+                    <div class="plan-icon"><svg class="icon icon-xl" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
                     <div class="plan-name">Enterprise</div>
                     <p class="plan-desc">Solução completa para grandes operações</p>
                     <ul class="plan-features">
-                        <li>Mais de 15 Usuários</li>
-                        <li>API Oficial do WhatsApp</li>
-                        <li>CRM Completo</li>
-                        <li>Inteligência Artificial</li>
-                        <li>Disparos em Massa</li>
-                        <li>Construtor de Fluxos</li>
-                        <li>Gerente de Conta Dedicado</li>
-                        <li>SLA Garantido</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Mais de 15 Usuários</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>API Oficial do WhatsApp</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRM Completo</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inteligência Artificial</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Disparos em Massa</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Construtor de Fluxos</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Gerente de Conta Dedicado</li>
+                        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SLA Garantido</li>
                     </ul>
                     <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+quero+saber+mais+sobre+o+plano+Enterprise+do+iZchat&type=phone_number&app_absent=0" class="btn btn-outline plan-cta">Consultar Valores</a>
                 </div>
@@ -522,9 +571,9 @@
                     <a href="https://chat.izchat.com.br/signup" class="btn btn-secondary">Criar Minha Conta</a>
                 </div>
                 <div class="cta-contact">
-                    <div class="cta-contact-item"><span>📱</span>(67) 98135-5555</div>
-                    <div class="cta-contact-item"><span>📧</span>contato@izchat.com.br</div>
-                    <div class="cta-contact-item"><span>🕐</span>Seg-Sex: 8h às 18h</div>
+                    <div class="cta-contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(67) 98135-5555</div>
+                    <div class="cta-contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>contato@izchat.com.br</div>
+                    <div class="cta-contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Seg-Sex: 8h às 18h</div>
                 </div>
             </div>
         </div>
@@ -534,9 +583,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <img src="img/logo.png" alt="iZchat">
+                    <img src="img/logo-transp.png" alt="iZchat">
                     <p>Plataforma completa de atendimento com IA, CRM integrado e automação inteligente para WhatsApp.</p>
-                    <div class="footer-social"><a href="#" title="Instagram">📷</a><a href="#" title="Facebook">📘</a><a href="#" title="LinkedIn">💼</a></div>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/izchatbot" target="_blank" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                    </div>
                 </div>
                 <div class="footer-column"><h4>Plataforma</h4><ul><li><a href="#funcionalidades">Funcionalidades</a></li><li><a href="#api-oficial">API Oficial</a></li><li><a href="#inteligencia-artificial">Inteligência Artificial</a></li><li><a href="#crm">CRM</a></li></ul></div>
                 <div class="footer-column"><h4>Empresa</h4><ul><li><a href="#planos">Planos</a></li><li><a href="#faq">FAQ</a></li><li><a href="https://chat.izchat.com.br/">Painel</a></li><li><a href="https://api.whatsapp.com/send/?phone=5567981355555">Contato</a></li></ul></div>
@@ -544,12 +595,13 @@
             </div>
             <div class="footer-bottom">
                 <p>© 2026 iZchat. Todos os direitos reservados. CNPJ: 58.169.089/0001-02</p>
-                <p>Desenvolvido em Campo Grande, MS 🇧🇷</p>
             </div>
         </div>
     </footer>
 
-    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+vim+pelo+site+e+quero+saber+mais+sobre+o+iZchat.&type=phone_number&app_absent=0" class="whatsapp-float" title="Fale Conosco no WhatsApp">💬</a>
+    <a href="https://api.whatsapp.com/send/?phone=5567981355555&text=Ol%C3%A1%2C+vim+pelo+site+e+quero+saber+mais+sobre+o+iZchat.&type=phone_number&app_absent=0" class="whatsapp-float" title="Fale Conosco no WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
 
     <script>
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
